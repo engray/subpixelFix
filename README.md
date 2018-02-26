@@ -1,5 +1,5 @@
 # subpixelFix
-Small vanilla js script that fixes blurry half pixel CSS transforms. It simply rounds transform value to full pixel. For now it fixed transformX and transformY values. 
+Small vanilla js script that fixes blurry half pixel CSS transforms. It simply rounds transform value to full pixel. For now it fixes transformX and transformY values. 
 
 Any feedback would be much appreciated!
 
