@@ -9,3 +9,4 @@ Just call ```subpixelFix();```
 ## TODO
 * add on resize callback
 * check and fix all matrix values
+*detect and run only when necessary (ie. chrome)
