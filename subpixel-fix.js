@@ -1,25 +1,25 @@
-//https://stackoverflow.com/questions/42267189/how-to-get-value-translatex-by-javascript
-function getTranslateX(cur_el) {
-    var style = window.getComputedStyle(cur_el);
-    var matrix = new WebKitCSSMatrix(style.webkitTransform);
-    return matrix.m41;
-}
-
-function getTranslateY(cur_el) {
-    var style = window.getComputedStyle(cur_el);
-    var matrix = new WebKitCSSMatrix(style.webkitTransform);
-    return matrix.m42;
-}
-
-//subpixel fix
 function subpixelFix() {
-    var subpixelElement = document.querySelectorAll(".subpixel-fix");
-    subpixelElement.forEach(function(cur_el) {
-        if ((getTranslateX(cur_el) % 2) || (getTranslateY(cur_el) % 2)) {
-            var tempValueX = getTranslateX(cur_el);
-            var tempValueY = getTranslateY(cur_el);
-            cur_el.style.transform = "translate(" + tempValueX.toFixed(0) + "px," + tempValueY.toFixed(0) + "px)";
+  var subpixelElement = document.querySelectorAll(".subpixel-fix");
+  subpixelElement.forEach(function(cur_el) {
+        let style = window.getComputedStyle(cur_el);
+        let matrix;
+
+        // switch between non standard matrix elements
+        if (typeof DOMMatrix !== 'undefined') {
+            matrix = new DOMMatrix(style.transform);
+        } else if (typeof CSSMatrix !== 'undefined') {
+            matrix = new CSSMatrix(style.transform);
+        } else if (typeof MSCSSMatrix !== 'undefined') {
+            matrix = new MSCSSMatrix(style.transform);
+        } else if (typeof WebKitCSSMatrix !== 'undefined') {
+            matrix = new WebKitCSSMatrix(style.webkitTransform);
         }
-    });
+
+        let transX = matrix.m41;
+        let transY = matrix.m42;
+        if ((transX % 2) || (transY % 2)) {
+            cur_el.style.transform = "translate(" + transX.toFixed(0) + "px," + transY.toFixed(0) + "px)";
+        }
+  });
 }
 subpixelFix();
